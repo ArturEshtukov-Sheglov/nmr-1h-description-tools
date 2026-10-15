@@ -1,0 +1,23 @@
+# Results produced by the scripts (contain text taken from the SI files)
+1H_descriptions.csv
+1H_descriptions.xlsx
+names_to_smiles_result.xlsx
+*.csv
+*.xlsx
+
+# Supporting Information and other PDFs (copyrighted by the publishers)
+*.pdf
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editors and operating systems
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
