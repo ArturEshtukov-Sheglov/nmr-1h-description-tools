@@ -174,7 +174,8 @@ if __name__ == "__main__":
                                            "dialog opens)")
     ap.add_argument("-o", dest="out", default="1H_descriptions",
                     help="name of the output tables without extension (default: 1H_descriptions)")
-    a = ap.parse_args()
+    # in a Jupyter/Colab cell sys.argv holds the kernel's own arguments ("-f kernel.json"): ignore them
+    a = ap.parse_args([] if "ipykernel" in sys.modules else None)
     files, base = a.pdf, re.sub(r"\.(xlsx|csv)$", "", a.out, flags=re.I)
     if not files:
         try:

@@ -2,7 +2,7 @@ README - count_1H_descriptions.py
 =================================
 
 Survey of published 1H NMR descriptions (Organic Letters, first half of 2026)
-Version: 15 October 2026
+Version: 17 October 2026
 
 Author: Artur V. Eshtukov-Shcheglov
 The code was written with the assistance of Claude Opus 5.5 (Anthropic) and was
@@ -15,6 +15,10 @@ The script reads Supporting Information (SI) PDF files and lists every text
 1H NMR description it finds, e.g.
 
     1H NMR (400 MHz, CDCl3) δ 7.41 (d, J = 6.9 Hz, 2H), ...
+    1H NMR (300 MHz, CDCl3): 7.35-7.28 (m, 2H), ...        (without δ)
+
+A δ typed in the Symbol font (which PDF text extraction returns as a special
+character) is recognised as well.
 
 For each description it records the compound label written before it (e.g. 3a)
 and flags descriptions that are probably not counted as new compounds:
@@ -68,6 +72,8 @@ A) Windows (terminal in Visual Studio, VS Code or PowerShell)
           python count_1H_descriptions.py "C:\path\to\SI_1.pdf" "C:\path\to\SI_2.pdf"
       (If the PDF is in the same folder, the file name alone is enough.
        A PDF can also be dragged from Explorer into the terminal window.)
+   Options:  -o NAME   name of the output tables (default 1H_descriptions)
+             --help    list of options
 
 B) Google Colab (nothing to install on your computer)
    1. Paste the whole script into a code cell and run it.
@@ -97,13 +103,17 @@ Columns:
                   at most 4000 characters
 
 Both tables are overwritten every time the script is run. To keep the results
-of several runs, rename the files, or give all PDFs in one command.
+of several runs, give another name with -o (e.g. -o counts_SI001), rename the
+files, or give all PDFs in one command.
 
 
 6. Troubleshooting
 ------------------
 "Permission denied: 1H_descriptions..."
     The table is open in Excel. Close it and run the script again.
+
+"The package ... is missing"
+    Install the packages (see 3. Requirements) and run the script again.
 
 "python" or "pip" is not recognized
     Python is not installed or not on the PATH. Install Python from python.org
