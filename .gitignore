@@ -1,23 +1,35 @@
-# Results produced by the scripts (contain text taken from the SI files)
-1H_descriptions.csv
-1H_descriptions.xlsx
-names_to_smiles_result.xlsx
-*.csv
-*.xlsx
+# ---- input data: SI files are not part of the repository (publishers' rights)
+data/*
+!data/README.txt
 
-# Supporting Information and other PDFs (copyrighted by the publishers)
-*.pdf
+# ---- results of the scripts
+results/
+check_descriptions/SI*/
+check_descriptions/S0*/
+check_descriptions/*.xlsx
+extract_names/*.xlsx
+names_to_smiles/*.xlsx
+count_1H_descriptions/*.xlsx
+count_1H_descriptions/*.csv
+rename_SI/SI_renamed/
 
-# Python
+# ---- private copy (Russian output), not for the repository
+check_descriptions/check_descriptions_ru.py
+
+# ---- old working folders, archives, hashes
+SI_rename/
+*.zip
+SHA256*.txt
+gitignore_suggested.txt
+
+# ---- Python, Jupyter, Office, Windows
 __pycache__/
 *.pyc
-.venv/
-venv/
-
-# Editors and operating systems
-.vs/
-.vscode/
-.idea/
+.ipynb_checkpoints/
+~$*
 Thumbs.db
 desktop.ini
-.DS_Store
+
+# ---- output of count_1H_descriptions when run from the main folder
+1H_descriptions.xlsx
+1H_descriptions.csv

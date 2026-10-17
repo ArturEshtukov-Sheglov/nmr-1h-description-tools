@@ -50,11 +50,12 @@ count.
 
 3. Requirements
 ---------------
-Python 3.9 or newer, and two packages that the script installs automatically
-if they are missing:
+Python 3.9 or newer, and two packages:
     pymupdf   (reads the PDF files)
     openpyxl  (writes the Excel table)
-To install them yourself:  pip install pymupdf openpyxl
+Install them once:  python -m pip install -r requirements.txt  (from the main
+folder; tested versions)  or  python -m pip install pymupdf openpyxl
+If a package is missing, the script stops and says which one.
 
 
 4. How to run

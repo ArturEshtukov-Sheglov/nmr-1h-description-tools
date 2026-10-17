@@ -4,7 +4,7 @@
 # Author:  Artur V. Eshtukov-Shcheglov
 # Code written with the assistance of Claude Opus 5.5 (Anthropic);
 # reviewed and tested by the author.
-# Version: 15 October 2026
+# Version: 17 October 2026
 #
 # IMPORTANT - the result must always be checked by hand.
 #   Tested against the manually determined pass-1 counts for 13 articles:
@@ -40,13 +40,12 @@
 #      (one row per 1H description, with the full text of the description)
 #      as 1H_descriptions.xlsx and 1H_descriptions.csv.
 
-import re, sys, csv, subprocess
+import os, re, sys, csv, subprocess
 
 try:
-    import pymupdf as fitz  # PyMuPDF (pip install pymupdf)
+    import pymupdf as fitz  # PyMuPDF
 except ImportError:
-    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "pymupdf"], check=True)
-    import pymupdf as fitz
+    sys.exit("The package pymupdf is missing. Install the packages with:\n    python -m pip install -r requirements.txt\n(or: python -m pip install pymupdf openpyxl rdkit)")
 
 # ---------------------------------------------------------------- text
 def pdf_text(path):
@@ -75,6 +74,8 @@ def pdf_text(path):
                     continue
                 out.append(s)
     text = re.sub(r"\s+", " ", " ".join(out))
+    # delta typed in the Symbol font is extracted as the private-use character U+F064 (v17c)
+    text = text.replace("\uf064", "δ")
     # isotope superscripts ("^{1}H", "^{13}C", "^{19}F") are not citations
     text = re.sub(r"\^\{(\d{1,3})\}\s?(?=(?:H|C|F|P|B|N|Si|Sn|Pt|Se)\b|(?:H|C|F|P|B|N)[\s{-])", r"\1", text)
     return text
@@ -86,11 +87,14 @@ C13 = re.compile(r"(?<![0-9A-Za-z])(?:13\s?C|¹³C)\s?(?:\{\s?(?:1\s?H|¹H)\s?\}
 HRMS_FOUND = re.compile(r"\bfound\b\s*:?\s*\d{2,4}\.\d{3,5}", re.I)
 
 # a description follows the header: a delta sign and at least one "x.xx (" within ~200 characters
-DESC_BODY = re.compile(r"δ.{0,200}?\d\.\d{1,3}\s?(?:–|-|—)?\s?(?:\d\.\d{1,3}\s?)?\(", re.S)
+DESC_BODY = re.compile(r"δ.{0,200}?\d\.\d{1,3}\s?(?:–|-|—)?\s?(?:\d\.\d{1,3}\s?)?\("
+                       # (v17c) descriptions written without δ: "1H NMR (300 MHz, CDCl3): 7.35-7.28 (m, 2H)"
+                       r"|^[^)\]]{0,80}[)\]]?\s?:?\s?(?:[A-Za-z][^()]{0,60}?[:.]\s?)?\d{1,2}\.\d{1,3}\s?(?:[–\-—−]\s?\d{1,2}\.\d{1,3}\s?)?"
+                       r"\(\s?(?:app(?:arent)?\.?\s|br\.?\s|ps\s)?(?:s|d|t|q|m|p|h|br|sept|hept|quint|pent|sext|[dtq]{2,5})\b", re.S)
 
 # compound label in parentheses, e.g. (3a), (5'), (S-2), (±)-12b is not taken
-LABEL = re.compile(r"\(\s*((?:[A-Z]{1,2}-?)?\d{1,3}[a-z]{0,3}[′'']?(?:-[a-z]{1,2})?)\s*\)"
-                   r"|\b[Cc]ompound\s+((?:[A-Z]{1,2}-?)?\d{1,3}[a-z]{0,3}[′'']?)")
+LABEL = re.compile(r"\(\s*((?:[A-Z]{1,2}-?)?\d{1,3}[a-z]{0,3}[′'’]?(?:-[a-z]{1,2})?)\s*\)"
+                   r"|\b[Cc]ompound\s+((?:[A-Z]{1,2}-?)?\d{1,3}[a-z]{0,3}[′'’]?)")
 
 KNOWN = re.compile(
     r"known compound|previously (?:reported|described|prepared|synthesi[sz]ed)"
@@ -142,7 +146,7 @@ def analyse(path):
                 flags.append("REPEAT of description #%d" % seen[label])
             else:
                 seen[label] = len(rows) + 1
-        rows.append(dict(file=path.split("/")[-1], index=len(rows) + 1, label=label,
+        rows.append(dict(file=os.path.basename(path.replace("\\", "/")), index=len(rows) + 1, label=label,
                          flags="; ".join(flags), description=full_description(S, m.start())))
     n13 = sum(1 for m in C13.finditer(S) if "δ" in S[m.start(): m.start() + 200])
     nhr = len(HRMS_FOUND.findall(S))
@@ -155,7 +159,7 @@ def summary(path, rows, n13, nhr):
     known = sum("KNOWN" in r["flags"] or "CITATION" in r["flags"] for r in rows)
     unflagged = sum(1 for r in rows if not r["flags"])
     print("=" * 70)
-    print(path.split("/")[-1])
+    print(os.path.basename(path.replace("\\", "/")))
     print(f"  1H descriptions: {n1h} | 13C descriptions: {n13} | HRMS 'found': {nhr}")
     print(f"  repeated labels: {repeats} | flagged as possibly known: {known}")
     print(f"  candidate n (descriptions without any flag): {unflagged}  <- check by hand")
@@ -163,13 +167,21 @@ def summary(path, rows, n13, nhr):
 
 # ---------------------------------------------------------------- run
 if __name__ == "__main__":
-    files = sys.argv[1:]
+    import argparse
+    ap = argparse.ArgumentParser(description="Find all text 1H NMR descriptions in SI PDF files, with "
+                                 "compound labels and flags for probably known or repeated compounds.")
+    ap.add_argument("pdf", nargs="*", help="SI file(s) in PDF format (in Google Colab: none - an upload "
+                                           "dialog opens)")
+    ap.add_argument("-o", dest="out", default="1H_descriptions",
+                    help="name of the output tables without extension (default: 1H_descriptions)")
+    a = ap.parse_args()
+    files, base = a.pdf, re.sub(r"\.(xlsx|csv)$", "", a.out, flags=re.I)
     if not files:
         try:
             from google.colab import files as colab_files   # Colab: upload dialog
             files = list(colab_files.upload().keys())
         except ImportError:
-            sys.exit("Usage: python count_1H_descriptions.py SI1.pdf [SI2.pdf ...]")
+            ap.error("give at least one PDF file")
     all_rows = []
     for f in files:
         rows, n13, nhr = analyse(f)
@@ -182,8 +194,7 @@ if __name__ == "__main__":
     try:
         import openpyxl
     except ImportError:
-        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "openpyxl"], check=True)
-        import openpyxl
+        sys.exit("The package openpyxl is missing. Install the packages with:\n    python -m pip install -r requirements.txt\n(or: python -m pip install pymupdf openpyxl rdkit)")
     wb = openpyxl.Workbook(); ws = wb.active; ws.title = "1H descriptions"
     ws.append(fields)
     for r in all_rows:
@@ -193,13 +204,13 @@ if __name__ == "__main__":
     for row in ws.iter_rows(min_row=2, min_col=5, max_col=5):
         row[0].alignment = openpyxl.styles.Alignment(wrap_text=True, vertical="top")
     try:
-        wb.save("1H_descriptions.xlsx")
+        wb.save(base + ".xlsx")
         # 2) standard CSV (comma-separated, UTF-8) for Python, R and other programs
-        with open("1H_descriptions.csv", "w", newline="", encoding="utf-8-sig") as fh:
+        with open(base + ".csv", "w", newline="", encoding="utf-8-sig") as fh:
             w = csv.DictWriter(fh, fieldnames=fields)
             w.writeheader(); w.writerows(all_rows)
     except PermissionError:
-        sys.exit("\nCannot write the table: 1H_descriptions.xlsx or .csv is open in another "
+        sys.exit(f"\nCannot write the table: {base}.xlsx or .csv is open in another "
                  "program (e.g. Excel). Close it and run the script again.")
-    print("\nTables saved: 1H_descriptions.xlsx (for Excel) and 1H_descriptions.csv"
+    print(f"\nTables saved: {base}.xlsx (for Excel) and {base}.csv"
           " (one row per 1H description)")

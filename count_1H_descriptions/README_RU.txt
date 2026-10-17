@@ -52,10 +52,12 @@ README - count_1H_descriptions.py (русская версия)
 
 3. Что нужно
 ------------
-Python 3.9 или новее и два пакета, которые скрипт устанавливает сам, если их нет:
+Python 3.9 или новее и два пакета:
     pymupdf   (чтение PDF-файлов)
     openpyxl  (запись таблицы Excel)
-Установить вручную:  pip install pymupdf openpyxl
+Установить один раз:  python -m pip install -r requirements.txt  (из главной
+папки; проверенные версии)  или  python -m pip install pymupdf openpyxl
+Если пакета нет, скрипт останавливается и пишет, какого именно.
 
 
 4. Как запустить
