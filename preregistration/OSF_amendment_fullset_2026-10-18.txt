@@ -1,0 +1,63 @@
+Amendment to the OSF protocol (Pass-3 protocol v1.2): secondary analysis of the full set
+=======================================================================================
+
+Survey of published 1H NMR descriptions (Organic Letters, first half of 2026)
+Author: Artur V. Eshtukov-Shcheglov
+Date written: 18 October 2026
+
+This file was written and published before any summary of the tool's results for the full
+set of descriptions (the share of flagged descriptions, overall or per checklist item) was
+computed or viewed. It will be attached to the formal OSF amendment.
+
+
+1. What has been done so far
+----------------------------
+The tool (extract_names, names_to_smiles, check_descriptions; frozen version of
+18 October 2026; SHA-256 below) was run on all 201 SI
+files (200 articles; one article has two SI files) of the Org. Lett. sample. It found
+8,609 1H NMR descriptions. The run was reproduced on a second computer: the
+check_descriptions tables were identical, and the extract_names tables were identical for
+199 of 201 files (one file differed only in whitespace after conversion from .docx; one
+file had been converted from the wrong .docx and was replaced and rerun).
+Only the numbers of descriptions, of structures and of descriptions marked by the tool as
+possibly known or repeated (KNOWN? 686, REPEAT 248) were looked at; no result of the checks
+(check_descriptions) was summarised.
+
+SHA-256 of the frozen scripts:
+    7d479b6d73f87e0228ee54f96339e0a02f93bcf41413e65da67428f86e7f2717  extract_names/extract_names.py
+    a1bde1a39ea614c9b55f05348ce462d4f5a2092bb89257ae2eca7426beecc257  names_to_smiles/names_to_smiles.py
+    00a39238bb4adb94853349f4fc010f06f131ff0f4bdf29735f8f3fa29e30a39a  check_descriptions/check_descriptions.py
+    7c41621ee541eeb9e2137267fe6f85f9f8660f0e0814e027c24feed58cbc51f2  count_1H_descriptions/count_1H_descriptions.py
+    977067fe9728f297be38b998ff05014e033ce41fd1795501211a706c6dcdaf23  rename_SI/rename_SI.py
+    834b36df34de8419bcb94962b6dfbab36a60cc4448d5dc846576c80016db13d7  run_all.py
+
+
+2. Primary analysis (unchanged)
+-------------------------------
+The primary result of the survey remains the assessment of the 982 randomly selected
+descriptions of new compounds (5 per article, or all if n < 5) by the expert reviewer
+according to protocol v1.2 and the application decisions recorded in the amendment.
+
+
+3. Secondary analysis of the full set (added)
+---------------------------------------------
+(a) Population. All 1H NMR descriptions found by the tool in the 200 SI files, without
+    selecting new compounds (descriptions of known compounds and repeated descriptions
+    are included).
+(b) Accuracy of the tool. The tool's agreement with the expert assessment is measured on
+    the 982 reference descriptions, per checklist item (items 1, 3, 4(a) and 6):
+    sensitivity, specificity, and the confusion table.
+(c) Full-set estimate. For the full set, the share of descriptions flagged by the tool is
+    reported overall and per checklist item, together with an estimate corrected for the
+    sensitivity and specificity measured in (b), with 95% confidence intervals that account
+    for clustering by article.
+(d) Transfer check. Because accuracy is measured on new compounds only, flag rates are
+    compared between descriptions marked by the tool as possibly known (KNOWN?) and
+    unmarked descriptions. A large difference is reported as a limitation of the
+    full-set estimate.
+(e) Item 1 is checked only for descriptions for which a structure was obtained from the
+    compound name; the share of such descriptions is reported, and the item-1 estimate is
+    stated to apply to this subset only.
+(f) Items 2, 4(b) and 7 are not checked by the tool and are not estimated for the full set.
+(g) The secondary analysis does not replace or modify the primary analysis; where the two
+    disagree, the primary analysis is reported as the main result.
