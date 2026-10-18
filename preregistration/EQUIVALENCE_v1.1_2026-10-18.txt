@@ -1,0 +1,36 @@
+Equivalence of tool version 1.1 with the frozen version of 18 October 2026
+==========================================================================
+
+Survey of published 1H NMR descriptions (Organic Letters, first half of 2026)
+Date: 18 October 2026
+
+Version 1.1 is a reorganisation of the code (comments, named constants, modules, removal of unused
+imports and dead code) made after a code review by a software developer. It was written after the
+results of the frozen version had been seen; it is intended to change no result. This file records
+the check that it does not.
+
+What was compared
+  Both versions were run on the same inputs, the 201 SI files (200 articles) of the Org. Lett. sample:
+  - count_1H_descriptions on the 201 PDF files: .xlsx, .csv and printed output;
+  - extract_names on the 201 PDF files: .xlsx and printed output;
+  - names_to_smiles on the 201 compound tables of the original run, with the OPSIN web service
+    replaced in both versions by the same fixed lookup table (the SMILES OPSIN returned in the
+    original run; other names answered as "not parsed"), so that both versions receive identical
+    answers offline: .xlsx and printed output;
+  - check_descriptions on the 201 structure tables of the original run: .xlsx and printed output;
+  - check_descriptions with PDF input on 21 of the PDF files (every tenth): .xlsx and printed output.
+  For every .xlsx file, every cell of every sheet was compared (value or formula, number format,
+  font, fill, alignment, border), together with row heights, column widths, frozen panes, auto
+  filter, conditional formatting rules and data-validation lists. .csv files and printed output
+  were compared byte by byte (paths of the two installations removed).
+
+Result
+  1,848 output files compared (823 .xlsx, 200 .csv, 825 printed outputs): all identical, except the
+  printed output of one SI file (ol6c01204), on which both versions stop with the same Excel error
+  (a control character from the PDF text in a cell; count_1H_descriptions and check_descriptions
+  with PDF input). The error message is identical; only the Python stack trace differs, because the
+  code lines have moved. The 24 unit tests pass with version 1.1.
+
+The results of the paper were obtained with the frozen version (SHA-256 in
+preregistration/OSF_amendment_fullset_2026-10-18.txt). SHA-256 of version 1.1:
+SHA256_v1.1_2026-10-18.txt.

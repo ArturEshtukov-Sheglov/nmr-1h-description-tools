@@ -2,7 +2,7 @@ README - count_1H_descriptions.py
 =================================
 
 Survey of published 1H NMR descriptions (Organic Letters, first half of 2026)
-Version: 17 October 2026
+Version: 1.1 (18 October 2026; results identical to the frozen version of 18 October 2026)
 
 Author: Artur V. Eshtukov-Shcheglov
 The code was written with the assistance of Claude Opus 5.5 (Anthropic) and was
