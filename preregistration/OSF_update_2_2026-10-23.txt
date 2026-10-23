@@ -1,0 +1,104 @@
+Update 2 to the OSF registration of the Pass-3 assessment protocol (version 1.2)
+================================================================================
+
+Registration: Assessment Protocol For A Survey Of Published 1H NMR Descriptions (Pass 3,
+Version 1.2), OSF Registries, registered 15 October 2026, doi:10.17605/OSF.IO/EQ9AH
+Previous update: Update 1, 21 October 2026 (preregistration/OSF_update_1_2026-10-21.txt)
+Author: Artur V. Eshtukov-Shcheglov
+Date written: 23 October 2026
+
+This update records what has been decided or added since Update 1. It does not change the
+checklist items 1-7, the sample or the primary analysis. Files referred to below are in the
+public GitHub repository ArturEshtukov-Sheglov/nmr-1h-description-tools, folder
+preregistration/, with the commits and SHA-256 values given here.
+
+
+1. Status at the time of writing
+--------------------------------
+- Reference: the author has reviewed 307 of the 982 first-pass decisions (two batches,
+  18-21 October 2026). The review of the remaining 675 is in progress.
+- Blind test, external rater, comparison models (GPT, Qwen, DeepSeek): unchanged since
+  Update 1 (not yet transcribed, not yet completed, not yet run).
+- Second data set (Update 1, section 7): not yet registered; no article of it has been opened.
+
+
+2. Review procedure (clarification of Update 1, section 1)
+-----------------------------------------------------------
+Update 1 describes the reference as "the author's review of every first-pass decision". The
+procedure, used for all reviewed descriptions from the start of the review, is: the author
+reads the description and the structure and makes his own assessment of each checklist item;
+only then does he read the first-pass decision and its reasons, and records agreement or
+disagreement with it and, where they differ, his own decision. The reference is the author's
+decision.
+
+
+3. Decisions on the open questions of Update 1, section 4(e)
+-------------------------------------------------------------
+Both were taken on 21 October 2026, during the review of the first batch, from descriptions
+in it, and before the reference is finalised. Results will be reported under these
+decisions, and the number of descriptions affected under the alternative will be given.
+
+(1) Item 7 and the borderline zone of item 6(b). A first-order-looking multiplet (e.g. an
+    aromatic "t") of a proton whose partner pair lies in the borderline strong-coupling zone
+    (6 <= Δν/J < 8) is not assessed under item 7; it is recorded in the item-6 subcategory
+    "borderline strong coupling". Such multiplets outside the borderline zone remain under
+    item 7.
+(2) Item 4(c). The exception "fewer partners than expected is not counted" does not apply to
+    a coupling that cannot remain unresolved when the coupling to the same proton that is
+    reported is resolved. Omitting such a coupling is an item-4 inconsistency. This covers
+    large heteronuclear couplings (2J(H,F) of about 45-50 Hz, 1J(P,H), large 2J(P,H)) and,
+    as decided later the same day after the second batch, large H-H couplings: aromatic ortho
+    (about 7-9 Hz), vicinal (about 7 Hz) in CH3-CH2, CH-CH3 and CH2-CH2 fragments, geminal
+    (about 12-16 Hz) of separately reported CH2 protons, and vinyl cis/trans couplings. Small
+    couplings (meta, other 4J, small H-F couplings) remain under 4(c) and are not counted.
+    The extended rule will be applied to all 982 descriptions, including those already
+    reviewed, before the reference is finalised.
+
+
+4. Further application decisions (protocol v1.2 unchanged)
+-----------------------------------------------------------
+Taken on 21 October 2026, after the second batch had been reviewed; they apply to all 982
+descriptions.
+
+(a) A coupling constant that is implausible in magnitude for the proton to which it can belong
+    (e.g. a pyridine H-5 reported as a doublet with J = 10.7 Hz) is given a note "suspicious
+    J by magnitude". The item-3 verdict follows the existing rule (partner not verifiable) and
+    is not changed by the note. The number of descriptions with the note will be reported.
+(b) Formally diastereotopic protons very far from the stereocentre (e.g. a CH2 more than ten
+    bonds away) are given a note that they may be isochronous; the item-7 verdict follows the
+    formal reading.
+(c) When the verdict depends on an assignment that cannot be established from the published
+    data, the reading in the authors' favour is taken (the description is consistent if there
+    is an assignment under which it is consistent).
+
+
+5. Tool versions (addition to Update 1, section 2)
+--------------------------------------------------
+(a) The results of the paper remain those of the frozen version (Update 1, section 2(a)).
+(b) Version 2 (V2, 22-23 October 2026) changes results: extraction fixes (Symbol-font
+    characters, isomer descriptions, ion types such as [M-N2+H]+ and [M-H+]-, isotopologue
+    masses, compound labels), a partial check of item 4(b) (an upper bound without an
+    assignment), and an item-3 finding for coupling constants above 25 Hz in compounds that
+    contain no F, P or other spin-active heteronucleus. V2 is not used for any result of the
+    Organic Letters set.
+(c) Data used to develop V2: the supporting information of six articles outside the sample
+    (Org. Lett. 2023 and 2014, ACS Catal. 2015 and three J. Am. Chem. Soc. 2026 articles);
+    the 201 SI files of the Organic Letters sample (regression checks); the compound labels
+    of the 982 reference descriptions (to check label changes); and the 982 reference
+    descriptions with their structures (to tune the item-4(b) check). V2 figures on these data
+    are reported for information only and are not measures of accuracy. The accuracy of V2
+    will be measured only on the test articles of the second data set, under the update that
+    registers that set (Update 1, section 7).
+(d) The V2 code will be published with the paper. Its SHA-256 values are deposited now:
+    preregistration/SHA256_V2_2026-10-23.txt
+    (SHA-256 9a4b3800441e677a407263f5b1975c70f5a516b0937ef57efe9c0a6ed3e5e65f),
+    commit b2d9ba0 (23 October 2026).
+(e) Planned version 1.1.1: an interactive prompt to install missing Python packages. It is
+    intended to change no result; equivalence will be checked as for version 1.1 (all output
+    files of the 201 SI identical) before it is used.
+(f) An auxiliary script that converts the review workbook into a Word document (one compound
+    per page) is used for reading and presenting the review. It only reads the workbook and
+    changes no decision.
+(g) A public web version of the tool, running V2 (marked as a beta until its accuracy has been
+    measured), is planned. Every report it produces states the version and date; uploaded data
+    are not stored. It is not used for any result of the paper.
