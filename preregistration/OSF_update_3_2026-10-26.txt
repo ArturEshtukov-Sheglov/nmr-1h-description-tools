@@ -1,0 +1,146 @@
+Update 3 to the OSF registration of the Pass-3 assessment protocol (version 1.2)
+================================================================================
+
+Registration: Assessment Protocol For A Survey Of Published 1H NMR Descriptions (Pass 3,
+Version 1.2), OSF Registries, registered 15 October 2026, doi:10.17605/OSF.IO/EQ9AH
+Previous update: Update 2, 23 October 2026 (preregistration/OSF_update_2_2026-10-23.txt)
+Author: Artur V. Eshtukov-Shcheglov
+Date written: 26 October 2026
+
+This update records what has been decided or added since Update 2. It does not change the
+checklist items 1-7, the sample or the primary analysis. Files referred to below are in the
+public GitHub repository ArturEshtukov-Sheglov/nmr-1h-description-tools, folder
+preregistration/, with the commits and SHA-256 values given here.
+
+
+1. Status at the time of writing
+--------------------------------
+- Reference: the author has reviewed 307 of the 982 first-pass decisions; the review of the
+  remaining 675 is in progress.
+- Blind test, external rater, comparison models (GPT, Qwen, DeepSeek): unchanged since
+  Update 2.
+- Second data set (Update 1, section 7): not yet registered; no article of it has been opened.
+
+
+2. Version 2.1 of the tools
+---------------------------
+(a) The results of the paper remain those of the frozen version (Update 1, section 2(a)).
+    Version 2.1 (V2.1-beta, frozen 26 October 2026) is not used for any result of the Organic
+    Letters set. It is called a beta until its accuracy has been measured on the test articles of
+    the second data set (section 3(e)); the public web version (Update 2, section 5(g)) will run it.
+(b) V2.1 changes results. Changes in reading the descriptions: notations not read by V2 (for
+    example "mc", "stack", "complex", "c.s.", "quasi d", "hextet", "nfod" with J_app, "br-s",
+    signals without brackets, the multiplicity written before the bracket), several shifts or
+    ranges given with one bracket ("2.09, 2.08, 2.01 (3 x s, each 3H)"), coupling constants
+    each followed by an assignment, the end of a description (data of other nuclei written
+    without "NMR", MS, UV-vis and IR data, procedure text after the last signal), running page
+    headers of journals inside a description, and assignments beginning with a digit read as
+    coupling constants. Changes in the checks: item 1 - protons on boron (B-H) not reported are
+    recorded in the protocol subcategory "protons on quadrupolar nuclei not reported"; when no
+    structure is available and the solvent is protic (D2O, CD3OD), fewer protons than the
+    formula are recorded in the subcategory "exchangeable proton not reported"; descriptions
+    that list only some signals ("characteristic peaks") are "cannot be determined";
+    descriptions of mixtures are recognised by more words; a structure obtained from a class
+    word taken as the compound name (e.g. "Carbamate") is not used. Item 4(a) - "pt" and "pq"
+    are read as pseudo-triplet and pseudo-quartet when the constants show this. Item 6(b) -
+    shifts that the authors give together with one bracket are not treated as two first-order
+    signals. V2.1 also keeps repeated identical signals (section 5(a)).
+(c) The full list of changes, with the date, the data source in which each failure was found
+    and the test added for it, is in DEVELOPMENT_LOG.md (EN) / DEVELOPMENT_LOG_RU.md (RU) and
+    CHANGELOG.md of the code.
+
+
+3. Development data of V2.1
+---------------------------
+(a) V2.1 was developed on open-access articles of 2024-2025 from the PubMed Central Open Access
+    Subset, CC BY licence only, downloaded with the script fetch_oa_si.py (PMC E-utilities and
+    the PMC Cloud Service): Beilstein J. Org. Chem. (109 articles, supporting information),
+    ACS Omega (170), J. Org. Chem. (300; supporting information and article PDFs) and Molecules
+    (1,004 article PDFs; 500 at random and 504 selected with the full-text search term
+    "CDCl3 OR DMSO-d6"). The lists of PMCIDs are deposited:
+    DEVELOPMENT_DATA_BJOC_PMCIDs.txt, DEVELOPMENT_DATA_ACSOMEGA_PMCIDs.txt,
+    DEVELOPMENT_DATA_JOC_PMCIDs.txt, DEVELOPMENT_DATA_MOLECULES_PMCIDs.txt.
+    In total these files contain 15,723 1H descriptions found by V2.1.
+(b) As for V2, the 201 SI files of the Organic Letters sample were used for regression checks
+    and the 982 reference descriptions with their structures for comparison; V2.1 figures on
+    these data are reported for information only and are not measures of accuracy.
+(c) Journals that are or may be part of this survey are never used as development data:
+    Org. Lett., Angew. Chem. Int. Ed., Eur. J. Org. Chem., Tetrahedron Lett., Chem. Commun.,
+    Nature Communications and Communications Chemistry (any year). The download script refuses
+    them. J. Org. Chem. is not part of the survey.
+(d) No article published in 2026 was used for development.
+(e) The accuracy of V2.1 will be measured only on the test articles of the second data set,
+    under the update that registers that set (Update 1, section 7), as for V2.
+
+
+4. Figures for information (not measures of accuracy)
+-----------------------------------------------------
+(a) On the 201 SI files of the Organic Letters sample (descriptions re-read by V2.1, structures
+    from the V2 run; 8,306 rows), V2.1 changes at least one verdict in 402 rows compared with
+    V2. Among the 982 reference descriptions, 824 could be matched by compound label; in 37 of
+    them at least one verdict changes.
+(b) Against the reference on these 824 descriptions (first pass with the author's review so
+    far; the reference is not final), found / false findings:
+    item 1: V2 21 / 47, V2.1 22 / 38 (35 in the reference);
+    item 3: V2 43 / 5, V2.1 44 / 5 (320);
+    item 4: V2 23 / 12, V2.1 23 / 3 (59);
+    item 6: V2 146 / 18, V2.1 147 / 18 (371).
+    These figures will be recomputed against the final reference.
+
+
+5. Known limitations of the frozen version found during development of V2.1
+---------------------------------------------------------------------------
+(a) Repeated identical signals. The frozen version (and versions 1.1, V2 and V2.0.1) reads a
+    signal that appears twice in a description with exactly the same text (e.g. "3.80 (s, 3H,
+    OMe PMB), 3.80 (s, 3H, OMe PMB)") only once: the repeat was treated as a copy of the text.
+    In published descriptions such repeats are different groups with the same signal (the OMe
+    groups of two PMB groups, three TBS groups, keto and enol forms of one compound). Dropping
+    the repeat can give a false item-1 finding (too few protons) and can change the pairs
+    examined under items 3 and 6(b).
+    How and when it was found: on 23 October 2026, during development of version 2.1, in a
+    stress test with synthetic descriptions written from known structures
+    (tests/stress/structure_test.py): all false item-1 findings on correct synthetic
+    descriptions came from this behaviour. At that time the first pass of the 982 descriptions
+    was complete and the author's review had covered 307 of them. The author's reference
+    assessment is not affected (the author reads every signal).
+    Extent: 83 of the 8,609 descriptions found in the 201 SI files, and 15 of the 982 selected
+    descriptions, contain a repeated identical signal.
+    Handling: the frozen version is not changed, and the tool results of the paper remain those
+    of the frozen version. In the accuracy analysis of the frozen version against the
+    reference, the number of disagreements under items 1, 3 and 6(b) caused by this behaviour
+    among the 15 descriptions will be reported. From version 2.1, repeated signals are kept.
+(b) HRMS data written before the 1H description. In two of the 201 SI files (SI035, SI181) the
+    HRMS of each compound is written before its 1H description. The frozen version takes the
+    HRMS formula that follows a description, so in these files it attaches each formula to the
+    neighbouring compound. None of the 982 selected descriptions is affected. V2.1 recognises
+    this layout per file, from the agreement of the integrals with the formula.
+
+
+6. Stress tests
+---------------
+(a) The self-test of the code (python run_all.py --selftest) runs unit tests and four stress
+    tests with synthetic descriptions and a fixed seed: a format test, a test of the checks
+    with known errors in spin systems, a test of the structure checks with descriptions
+    written from known structures, and, from V2.1, a realistic reading test.
+(b) In the realistic reading test the content of one published description (shifts,
+    multiplicities, coupling constants, integrals) is written in the style of another
+    published description (header, separators, order of the parts in the bracket, spellings of
+    multiplicities, templates of the coupling constants, assignments), with the notation
+    variants and their frequencies taken from the 15,723 development descriptions (the 12,830
+    descriptions that V2.1 reads completely give the styles and contents). The correct answer
+    is known for every synthetic description. With 100,000 descriptions and seed 260626,
+    V2.1-beta misreads 39 (0.04 %) and V2 7,017 (7.02 %). The self-test of V2.1-beta with
+    10,000 descriptions per test (seed 20261023) passes all checks.
+(c) Stress tests are not accuracy measurements. They show how robustly the tool reads the
+    forms that occur in the literature, with the correct answer known for every description.
+    They do not show how accurate the tool is on new articles: the accuracy of each version is
+    measured only on test articles that were not used in its development.
+
+
+7. Code
+-------
+The V2.1-beta code will be published with the paper (and, if the web version is launched first,
+with the web version). Its SHA-256 values (all Python files and the style file of the realistic
+test) are deposited now:
+preregistration/SHA256_V2.1-beta_2026-10-26.txt
+(SHA-256 84995b763ea7587cb1e9fa57d919f5b2c8ebe80f73a697087f89c8674fd3f5c1), commit 11debf5 (26 October 2026).
