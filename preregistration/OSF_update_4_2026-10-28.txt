@@ -1,0 +1,54 @@
+Update 4 to the OSF registration of the Pass-3 assessment protocol (version 1.2)
+================================================================================
+
+Registration: Assessment Protocol For A Survey Of Published 1H NMR Descriptions (Pass 3,
+Version 1.2), OSF Registries, registered 15 October 2026, doi:10.17605/OSF.IO/EQ9AH
+Previous update: Update 3, 26 October 2026 (preregistration/OSF_update_3_2026-10-26.txt)
+Author: Artur V. Eshtukov-Shcheglov
+Date written: 28 October 2026
+
+This update records what has been added since Update 3. It does not change the checklist
+items 1-7, the sample or the primary analysis, and it changes no result. Files referred to
+below are in the public GitHub repository ArturEshtukov-Sheglov/nmr-1h-description-tools,
+folder preregistration/, unless another repository is named.
+
+
+1. Status at the time of writing
+--------------------------------
+Unchanged since Update 3: the author has reviewed 307 of the 982 first-pass decisions; blind
+test, external rater, comparison models and the second data set as in Update 3.
+
+
+2. Version V2.1.1-beta (launchers only)
+---------------------------------------
+(a) V2.1.1-beta differs from V2.1-beta (Update 3, section 2) only in the launcher: run_all.py
+    also writes a Word report for every checked file (Review to Word,
+    review_to_word/export_docx.py; Update 2). The report only reads the result table, which
+    stays as before; it changes no verdict.
+(b) The check scripts are identical to V2.1-beta. Of the 30 files listed in
+    SHA256_V2.1-beta_2026-10-26.txt, 29 have the same SHA-256; only run_all.py changed, and
+    review_to_word/export_docx.py was added. The SHA-256 values are deposited in
+    preregistration/SHA256_V2.1.1-beta_2026-10-26.txt
+    (SHA-256 0cc51bffd239c8767ef392c53b910018ac86a8fafa34d63f7d0960d1ac200623),
+    commit 438e175 (28 October 2026).
+(c) The results of the paper remain those of the frozen version (Update 1, section 2(a)).
+    V2.1.1-beta, like V2.1-beta, is not used for any result of the Organic Letters set, and its
+    accuracy will be measured only on the test articles of the second data set (Update 3,
+    section 3(e)).
+
+
+3. Code published
+-----------------
+(a) The V2.1.1-beta code is public from 28 October 2026 in a new repository,
+    ArturEshtukov-Sheglov/checkHNMR (MIT licence; commit 1fab075), as the local version of the
+    checkHNMR web version (Update 2, section 5(g)). This is earlier than stated in Update 3,
+    section 7 ("will be published with the paper (and, if the web version is launched first,
+    with the web version)"); the web version has not been launched yet. The files in the
+    repository have the SHA-256 values of section 2(b).
+(b) The repository contains the development log, the lists of development articles
+    (Update 3, section 3(a)), the unit tests and the stress tests of the self-test. It contains
+    no supporting information files and no tool results or reference assessments of the
+    Organic Letters set.
+(c) The frozen version used in the paper (version 1.1, SHA256_v1.1_2026-10-18.txt) is not
+    changed; its SHA-256 values stay those deposited in the repository
+    nmr-1h-description-tools.
