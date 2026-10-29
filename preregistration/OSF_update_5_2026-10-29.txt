@@ -1,0 +1,39 @@
+Update 5 to the OSF registration of the Pass-3 assessment protocol (version 1.2)
+================================================================================
+
+Registration: Assessment Protocol For A Survey Of Published 1H NMR Descriptions (Pass 3,
+Version 1.2), OSF Registries, registered 15 October 2026, doi:10.17605/OSF.IO/EQ9AH
+Previous update: Update 4, 28 October 2026 (preregistration/OSF_update_4_2026-10-28.txt)
+Author: Artur V. Eshtukov-Shcheglov
+Date written: 29 October 2026
+
+This update records what has been added since Update 4. It does not change the checklist
+items 1-7, the sample or the primary analysis, and it changes no result.
+
+
+1. Status at the time of writing
+--------------------------------
+Unchanged since Update 4: the author has reviewed 307 of the 982 first-pass decisions.
+
+
+2. Web version launched
+-----------------------
+(a) The checkHNMR web version (Update 2, section 5(g)) is public from 28 October 2026 at
+    https://checkhnmr.org (up to 20 compounds per check). It runs the V2.1-beta check scripts
+    (identical to V2.1.1-beta, Update 4, section 2(b)) in the user's browser; descriptions and
+    files are not sent to any server.
+(b) Equivalence with the local version: on 24,463 descriptions (14,994 with structures) from
+    the development runs and the Organic Letters set, the web version gives byte-identical
+    verdicts and findings to the local version. The Organic Letters descriptions were used
+    only for this comparison; nothing was changed on the basis of them.
+(c) The web page shows the verdicts as alerts of three levels; this display does not change
+    any verdict.
+(d) As in Update 4, section 2(c): the web version is not used for any result of the
+    Organic Letters set.
+
+
+3. Code archived
+----------------
+The repository ArturEshtukov-Sheglov/checkHNMR (V2.1.1-beta, Update 4, section 3) is archived
+on Zenodo: doi:10.5281/zenodo.23749627 (all versions); version V2.1.1-beta
+doi:10.5281/zenodo.23749628 (29 October 2026).
