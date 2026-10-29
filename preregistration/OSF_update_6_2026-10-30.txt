@@ -1,0 +1,41 @@
+OSF REGISTRATION doi:10.17605/OSF.IO/EQ9AH — UPDATE 6 (30 October 2026)
+
+1. Status of the assessment
+Unchanged since Update 5: 307 of the 982 selected Organic Letters descriptions reviewed. The version of the tools
+used for the survey (frozen 17.10.2026, v1.1) is unchanged.
+
+2. checkHNMR V2.1.2-beta (30 October 2026)
+One reading fix in the check scripts (check_descriptions/description_parser.py), found while writing the paper on
+checkHNMR:
+- "nfot" and "nfom" (non-first-order triplet and multiplet in the notation of Tang, Xu and Hoye, Molecules 2025,
+  30, 2610, doi:10.3390/molecules30122610) are read as multiplets, as "nfod" already was in V2.1-beta. Before, a
+  J_app given with them gave a false item-4(a) finding ("J without multiplicity").
+- A sum of constants written as the splitting ("J_o + J_p = 8.6 Hz", "3J + 5J = 8.5 Hz") is read as an apparent
+  value (J_app), as protocol v1.2, item 6 (ii), requires. Before, it was read as an ordinary coupling constant.
+Tests: tests/test_v212_fixes.py (4 tests; 86 unit tests in all); self-test (10,000 synthetic descriptions per
+test): all pass. Realistic reading test (100,000 descriptions, seed 260626): 39 misread (0.04 %), as V2.1-beta.
+Regression: 7,745 published 1H descriptions from 214 SI files (Organic Letters and Beilstein J. Org. Chem.) read
+and checked (items 3, 4(a), 6(b)) with V2.1.1-beta and V2.1.2-beta: no description changed. The Organic Letters
+descriptions were used only for this comparison, not for development.
+Code: GitHub checkHNMR, commit d609d5e; Zenodo version doi:10.5281/zenodo.23784006 (all versions:
+doi:10.5281/zenodo.23749627). SHA-256 of all scripts: preregistration/SHA256_V2.1.2-beta_2026-10-30.txt
+(commit 6888dfb; SHA-256 of the file 2fa3d9503e7614d2095f10874142503102169f2b65c74c54a3e2a9077fc452c7).
+Compared with V2.1.1-beta, only description_parser.py changed and tests/test_v212_fixes.py was added.
+
+3. Website checkhnmr.org
+29 October 2026, website layer only; the check scripts and the verdicts did not change:
+- signals typed with Cyrillic look-alike letters, other dashes (incl. U+2212 and "~"), full-width punctuation,
+  invisible characters or extra spaces are now found for highlighting in the report;
+- a format alert (C) lists Cyrillic letters in the entries; Cyrillic look-alikes in the HRMS, 19F and 31P fields
+  are read as Latin (as the PDF route already did);
+- highlighting is kept when a report is printed; the HRMS field label says it may be left empty if a SMILES
+  string is given.
+A manual-input stress test (all 15,723 development descriptions, each "typed" with Cyrillic look-alikes, Word
+autocorrect, minus signs, no-break spaces and line breaks) gave verdicts, findings and parsed signals identical
+to the original texts in every variant, and every signal (149,041) was found for highlighting.
+30 October 2026: the website runs V2.1.2-beta (same check scripts as the local version); the About page has a
+version history.
+
+4. Use in the survey
+None of these changes affects the survey: its results are obtained with the frozen version v1.1. The accuracy of
+V2.1.x is to be measured only on test articles not used in its development (Update 3).
