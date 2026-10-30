@@ -1,0 +1,44 @@
+OSF REGISTRATION doi:10.17605/OSF.IO/EQ9AH — UPDATE 7 (31 October 2026)
+
+1. Status of the assessment
+Unchanged since Update 5: 307 of the 982 selected Organic Letters descriptions reviewed. The version of the tools
+used for the survey (frozen 17.10.2026, v1.1) is unchanged.
+
+2. checkHNMR V2.1.3-beta (31 October 2026)
+One new check in the check scripts (check_descriptions/item4b.py), found while writing the paper on checkHNMR:
+- Item 4(b) also has a lower bound for methyl groups. A CH3 next to a carbon that carries a proton (CH3-CH,
+  CH3-CH2, CH3-CH=) is always split (3J about 7 Hz). Every singlet below 4.5 ppm must be given by its own groups of
+  the structure that can be singlets; if the singlets of 3, 6, 9 ... H cannot all be explained and the structure
+  has a CH3 that must be split, item 4(b) is "candidate (check)". Diastereotopic CH3 (SiMe2, acetonides, C(CH3)2),
+  CH3 next to a CH or CH2 bonded to Si (TIPS, TES), broad singlets and mixtures are not counted. Found on a
+  development SI (ja6c10875, "1.15 (s, 3H)" for the CH3 on an aziridine CH).
+- The Excel table and the Word report of the local version list items 2, 5 and 7 as "not checked"
+  (check_descriptions/excel_output.py, verdicts.py, review_to_word/export_docx.py); no verdict changes.
+Development data used for the new rule: 5,120 descriptions with structures from 300 J. Org. Chem. 2024-2025
+articles (already development data, PMCID list in the checkHNMR repository). 34 descriptions get the new finding;
+no other item changed. The first version of the rule gave false findings for diastereotopic SiMe2/C(CH3)2, TIPS
+written as "s, 21H" and a chain envelope written as "s, 18H"; these were corrected before the release.
+Regression: 7,745 published 1H descriptions without structures (Org. Lett. and Beilstein J. Org. Chem. SI, read
+with count_1H_descriptions; regression only, as in Update 6) checked with V2.1.2-beta and V2.1.3-beta: no
+description changed (the new rule needs a structure). The Organic Letters descriptions were not used to develop
+the new rule.
+Tests: tests/test_v213_fixes.py (4 tests; 90 unit tests in all). Self-test with 100,000 synthetic descriptions per
+test (seed 20261023): all pass; a new error in the structure stress test ("methyl_s": the signal of a CH3 next to a
+carbon with H written as a singlet) is found in 95.6 % of cases, with no false findings on correct descriptions
+(summary: docs/selftest_V2.1.3-beta_100k.txt in the checkHNMR repository). Realistic reading test (100,000
+descriptions, seed 260626): 39 misread (0.04 %), as V2.1.2-beta.
+Code: GitHub checkHNMR, commit 42ac474; Zenodo version doi:10.5281/zenodo.23823029 (all versions:
+doi:10.5281/zenodo.23749627). SHA-256 of all scripts: preregistration/SHA256_V2.1.3-beta_2026-10-31.txt
+(commit 4241d2a; SHA-256 of the file 5232cb03be96e2f15d6c7bb6a642e47ad8d29825a685445a85cf21b50ba0cef3).
+Compared with V2.1.2-beta, check_descriptions/item4b.py, verdicts.py, excel_output.py, review_to_word/export_docx.py,
+run_all.py and tests/stress/structure_test.py changed and tests/test_v213_fixes.py was added.
+
+3. Website checkhnmr.org
+31 October 2026: the website runs V2.1.3-beta (same check scripts as the local version). The new finding is shown
+as its own alert B ("Item 4(b). Methyl singlet, but the CH3 group has neighbours"); the verdict is the item-4(b)
+"candidate (check)". Website (Pyodide with RDKit.js) and Python gave identical verification codes and item-4(b)
+verdicts on the 5,120 development descriptions with structures. The About page lists the version.
+
+4. Use in the survey
+None of these changes affects the survey: its results are obtained with the frozen version v1.1. The accuracy of
+V2.1.x is to be measured only on test articles not used in its development (Update 3).
