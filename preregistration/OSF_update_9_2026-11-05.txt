@@ -1,0 +1,55 @@
+OSF REGISTRATION doi:10.17605/OSF.IO/EQ9AH — UPDATE 9 (5 November 2026)
+
+1. Status of the assessment
+Unchanged since Update 5: 307 of the 982 selected Organic Letters descriptions reviewed. The version of the tools
+used for the survey (frozen 17.10.2026, v1.1) is unchanged. The blind test (Update 8) is not affected.
+
+2. checkHNMR V2.1.4-beta (5 November 2026)
+Two new checks in the check scripts, both for descriptions with a structure:
+- Item 4(b) (check_descriptions/item4b.py): the proton next to a CH3 doublet. A CH3 reported as a doublet shows that
+  its coupling to the neighbouring CH is resolved, so that CH couples to three equivalent protons with this constant
+  and must show at least a quartet for it. If every signal that reports this constant shows fewer than three
+  partners for it ("d", "dd", "t") and no multiplet without constants, broad or apparent signal could be that CH,
+  item 4(b) is "candidate (check)". Applied when the structure has a CH3 bonded to a carbon with one H (not next to
+  Si); CH3 doublet of 3, 6 or 9 H below 4.5 ppm with one constant of 5.0-8.5 Hz; the CH is looked for among signals
+  of 1 H (or n/3 H) up to 6.5 ppm (7.6 ppm if the CH can be =CH-CH3), with the tolerance of item 3.
+- Item 6(a) (check_descriptions/structure_checks.py, verdicts.py, excel_output.py): CH2-CH2 of an open chain
+  (X-CH2-CH2-Y, including the inner CH2 of alkyl chains) written with a first-order multiplicity and a coupling
+  constant is reported as the subcategory "flexible chain" of protocol v1.2, item 6(a) (formally AA'XX', usually
+  deceptively simple), not as an inconsistency, when the structure has no saturated-ring CH2-CH2. This implements
+  a subcategory of the protocol that earlier versions did not report (listed as not checked in Update 3 and in the
+  paper on checkHNMR). The conclusion of a description does not change.
+Origin of the item-4(b) rule: the idea came from a description seen while preparing the cards of the blind test
+(Update 8), an Organic Letters description of the survey sample. That description was not used to build or test the
+rule and is left out of any accuracy measurement of V2.1.x. The rule was built on synthetic descriptions and checked
+on development data only. Protocol v1.2 is not changed: its item 4(c) does not count a multiplicity with fewer
+partners than the structure gives (a small constant may stay unresolved); the survey reference keeps applying
+v1.2, and this case will be described as a limitation of the protocol in the survey paper.
+Development data used: 5,120 descriptions with structures from 300 J. Org. Chem. 2024-2025 articles (already
+development data, PMCID list in the checkHNMR repository). Compared with V2.1.3-beta: 3 descriptions get the new
+item-4(b) finding (all real errors of the description: a CH next to a CH3 written as "ddd" with a 12.5 Hz constant,
+and two isopropyl CH septets written as "dt" or "dd" with twice the constant); 260 get the item-6(a) subcategory;
+no other verdict and no conclusion changed. A first version of the item-4(b) rule also matched an aromatic triplet
+with a similar constant; the shift limit for the CH was added before the release.
+Tests: tests/test_v214_fixes.py (10 tests, synthetic descriptions only; 100 unit tests in all). Self-test with
+100,000 synthetic descriptions per test (seed 20261023): all pass; a new error in the structure stress test
+("ch_methyl": the CH next to a CH3 doublet written as a doublet with the CH3 constant) is found in 93.4 % of
+cases, with no false findings on correct descriptions (summary: docs/selftest_V2.1.4-beta_100k.txt in the checkHNMR
+repository). The reading of descriptions (description_parser.py) did not change: realistic reading test (100,000
+descriptions, seed 260626): 39 misread (0.04 %), as V2.1.3-beta.
+Code: GitHub checkHNMR, commit c3f25c1; Zenodo version doi:10.5281/zenodo.23966635 (all versions:
+doi:10.5281/zenodo.23749627). SHA-256 of all scripts: preregistration/SHA256_V2.1.4-beta_2026-11-05.txt
+(commit 507eb52; SHA-256 of the file 01b5282f8a5e36199a2ac4eac926264b899bead6748b969a92001fc6a1656dac).
+Compared with V2.1.3-beta, check_descriptions/item4b.py, structure_checks.py, verdicts.py, excel_output.py,
+run_all.py and tests/stress/structure_test.py changed and tests/test_v214_fixes.py was added.
+
+3. Website checkhnmr.org
+5 November 2026: the website runs V2.1.4-beta (same check scripts as the local version). The item-4(b) finding is
+shown as its own alert B ("Item 4(b). Proton next to a CH3 doublet is not a quartet"); the item-6(a) subcategory as
+an alert C ("Item 6(a). Open-chain CH2–CH2 in first-order notation"). Website (Pyodide with RDKit.js) and Python
+gave identical verification codes, verdicts and alerts on the 5,120 development descriptions with structures.
+Version V2.1.3-beta, described in the paper on checkHNMR, is kept unchanged at checkhnmr.org/v2.1.3-beta/.
+
+4. Use in the survey
+None of these changes affects the survey: its results are obtained with the frozen version v1.1. The accuracy of
+V2.1.x is to be measured only on test articles not used in its development (Update 3).
