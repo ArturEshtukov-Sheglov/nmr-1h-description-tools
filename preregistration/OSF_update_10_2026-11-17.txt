@@ -1,43 +1,91 @@
-Update 10 (17 November 2026): checkHNMR V2.1.5-beta
+OSF REGISTRATION doi:10.17605/OSF.IO/EQ9AH — UPDATE 10 (17 November 2026)
 
-1. New version of checkHNMR
+1. Status of the assessment
+Unchanged since Update 5: 307 of the 982 selected Organic Letters descriptions reviewed. The version of the tools
+used for the survey is unchanged: the frozen version of 18 October 2026 (Update 1, section 2(a); on its label in
+earlier updates, see section 5(d)). The blind test (Update 8) is not affected.
 
-checkHNMR V2.1.5-beta was released on 17 November 2026: GitHub tag v2.1.5-beta (commit cdb2b46), Zenodo https://doi.org/10.5281/zenodo.24314643 (all versions: https://doi.org/10.5281/zenodo.23749627). Update 9 described the previous version, V2.1.4-beta. The commit after the tag (7f2ae85) changes only the Zenodo metadata file .zenodo.json, which is not in the hash list. The changes are described in CHANGELOG.md and docs/DEVELOPMENT_LOG.md of the repository. In short:
-(a) item 4(b): counting of large couplings (J ≥ 6 Hz) with a multiplet-width test, and the range of each coupling constant by the type of the proton pair;
-(b) item 1: the integrals must fit the groups of equivalent protons;
-(c) a ¹⁹F or ³¹P description that gives only shifts is no longer read as singlets; the H–X partner of a constant without a ¹H partner is unverifiable;
-(d) a description with no coupling constant and at least one "m" is reported as not checked by items 3, 4(a) and 6, instead of "no inconsistency found".
+2. checkHNMR V2.1.5-beta (17 November 2026)
+Changes in the check scripts (the effect of each rule on the development data is given in CHANGELOG.md of the
+checkHNMR repository):
+- Item 4(b) (check_descriptions/width_count.py, new): counting of large couplings (J ≥ 6 Hz) with a multiplet-width
+  test, and the range of each coupling constant by the type of the proton pair.
+- Item 1: the integrals must fit the groups of equivalent protons.
+- Item 3: a ¹⁹F or ³¹P description that gives only shifts is no longer read as singlets; the H–X partner of a
+  constant without a ¹H partner is unverifiable.
+- A description with no coupling constant and at least one "m" is reported as not checked by items 3, 4(a) and 6,
+  instead of "no inconsistency found".
+The width test is justified in the note "checkHNMR V2.1.5: Justification of the multiplet-width test" (17 November
+2026, 15 pages), which gives the source of each numerical bound. The note is deposited with this update as
+checkHNMR_V2.1.5_width_test.pdf (SHA-256 cc793e19a38902e3ddf310de694a549c930d8d3c89670e48d519e892823fb227,
+423,065 bytes); the same file is in the checkHNMR repository (docs/development/width_criterion/, with the code that
+reproduces its computed numbers) and on the website.
+Development data used: 5,136 descriptions with structures from 300 J. Org. Chem. 2024-2025 articles (8,540 rows;
+already development data, PMCID list in the checkHNMR repository) and the Supporting Information of ol5c05448
+(section 4). Compared with V2.1.4-beta on the J. Org. Chem. data, the conclusions changed as follows: inconsistent
+under items 1-4, 1,229 -> 1,268; under item 6 only, 1,239 -> 1,221; to check, 4,312 -> 4,297; no finding,
+1,760 -> 1,125; not checked (new), 629.
+Tests: tests/test_v215_fixes.py (13 tests, synthetic descriptions only; 113 unit tests in all). Self-test with
+100,000 synthetic descriptions per test (seed 20261023): all pass, with no false findings of the new rules on
+correct descriptions (summary: docs/selftest_V2.1.5-beta_100k.txt in the checkHNMR repository). Realistic reading
+test (100,000 descriptions, seed 260626): 39 misread (0.04 %), as V2.1.4-beta.
+Code: GitHub checkHNMR, tag v2.1.5-beta (commit cdb2b46); Zenodo version doi:10.5281/zenodo.24314643 (all versions:
+doi:10.5281/zenodo.23749627). The commit after the tag (7f2ae85) changes only the Zenodo metadata file
+.zenodo.json. SHA-256 of every .py and .gz file of the repository (40 files, in the format of the earlier lists):
+preregistration/SHA256_V2.1.5-beta_2026-11-17.txt (commit 63cca9d; SHA-256 of the file
+dc8995ad149431cd4e58e5525f2e94d40db5db873006ac86a1b7120c20f6ba74).
+Compared with SHA256_V2.1.4-beta_2026-11-05.txt, 26 files are unchanged and none was removed;
+check_descriptions/check_descriptions.py, description_parser.py, excel_output.py, text_checks.py, verdicts.py,
+run_all.py, tests/stress/structure_test.py and tests/test_v214_fixes.py changed; check_descriptions/width_count.py,
+tests/test_v215_fixes.py and docs/development/width_criterion/analytic.py, spin.py, tables.py and test_width.py
+were added.
 
-2. Deposited files
+3. Website checkhnmr.org
+17 November 2026: the website runs V2.1.5-beta (same check scripts as the local version). Website (Pyodide with
+RDKit.js) and Python gave identical verdicts, findings, alerts and verification codes on the 5,136 development
+descriptions with structures. V2.1.4-beta is kept at checkhnmr.org/v2.1.4-beta/ with its Python, scripts and
+libraries unchanged, so that the verification codes of reports made with it can still be reproduced. Version
+V2.1.3-beta, described in the paper on checkHNMR, is kept unchanged at checkhnmr.org/v2.1.3-beta/ (its files are
+byte-identical to those before this update).
+SHA-256 of every file of the website as deployed on 17 November 2026 (106 files, each py/checkhnmr.zip followed by
+the files inside it; 161 lines): preregistration/SHA256_website_V2.1.5-beta_2026-11-17.txt (commit 63cca9d;
+SHA-256 of the file 4380e4c143b41f73c16536692aaaa691299bfde14330c584cbf56eeadcf3d200). It includes site_api.py,
+which runs the check in the browser and computes the verification code and is not in the checkHNMR repository; the
+other Python files of the current py/checkhnmr.zip are identical to those in SHA256_V2.1.5-beta_2026-11-17.txt.
 
-(a) SHA256_V2.1.5-beta_2026-11-17.txt: SHA-256 of every .py and .gz file of the repository at tag v2.1.5-beta (40 files), in the format of the earlier lists.
-SHA-256 of this file: dc8995ad149431cd4e58e5525f2e94d40db5db873006ac86a1b7120c20f6ba74
-Against SHA256_V2.1.4-beta_2026-11-05.txt: 26 files unchanged; none removed.
-Changed (8): check_descriptions/check_descriptions.py, check_descriptions/description_parser.py, check_descriptions/excel_output.py, check_descriptions/text_checks.py, check_descriptions/verdicts.py, run_all.py, tests/stress/structure_test.py, tests/test_v214_fixes.py.
-Added (6): check_descriptions/width_count.py, tests/test_v215_fixes.py, and docs/development/width_criterion/analytic.py, spin.py, tables.py, test_width.py (the code that reproduces the computed numbers of the note in (b)).
-
-(b) checkHNMR_V2.1.5_width_test.pdf: the note "checkHNMR V2.1.5: Justification of the multiplet-width test" (17 November 2026, 15 pages). It justifies the width test of item 4(b) and gives the source of each numerical bound. The same file is in the repository (docs/development/width_criterion/) and on the website.
-SHA-256: cc793e19a38902e3ddf310de694a549c930d8d3c89670e48d519e892823fb227 (423,065 bytes)
-
-(c) SHA256_website_V2.1.5-beta_2026-11-17.txt: SHA-256 of every file of the website checkhnmr.org as deployed on 17 November 2026 (106 files), with the files inside each py/checkhnmr.zip listed after it (lines ".../checkhnmr.zip:/..."; 161 lines in all). These include site_api.py, which runs the check in the browser and computes the verification code, and which is not in the repository. The other Python files of the current py/checkhnmr.zip are identical to those in list (a).
-SHA-256 of this file: 4380e4c143b41f73c16536692aaaa691299bfde14330c584cbf56eeadcf3d200
-
-3. Website
-
-The website runs V2.1.5-beta. Its code gave the same verdicts, findings, alerts and verification codes in the browser (Pyodide with RDKit.js) as in Python with RDKit on the 5,136 development descriptions from J. Org. Chem. that have structures. V2.1.4-beta is kept at https://checkhnmr.org/v2.1.4-beta/ with its Python, scripts and libraries unchanged, so the verification codes of reports made with it can still be reproduced. The archived V2.1.3-beta at https://checkhnmr.org/v2.1.3-beta/ is unchanged: its files are byte-identical to those before this update.
-
-4. Development data and the survey
-
-The Supporting Information of ol5c05448 (Org. Lett. 2026), an article of the survey sample, was used as development data of V2.1.5 after its assessment in the survey (docs/DEVELOPMENT_LOG.md). It stays in the survey. The results of V2.1.5 on this article are development results and are not used to measure accuracy. The development articles that are not in the PMCID lists of the repository, ol5c05448 included, are now listed in docs/development_data/DEVELOPMENT_DATA_OTHER.txt (commit 3c29a23, section 5). The checks of the survey were made with versions before V2.0; this update does not change them. If V2.1.5 is used in the survey, I will register that use in a separate update before the run, and the articles used to develop V2.1.5 will be excluded from that analysis or reported separately.
+4. Use in the survey
+None of these changes affects the survey: its results are obtained with the frozen version (Update 1, section
+2(a)). As registered in Update 1, section 2(c), V2.1.5 is not used for the results of the Organic Letters set, and
+its accuracy will be measured only on data not used to develop it, under an update registered before that
+measurement. The Supporting Information of ol5c05448 (Org. Lett. 2026), an article of the survey sample, was used
+as development data of V2.1.5 after its assessment in the survey (docs/DEVELOPMENT_LOG.md and
+docs/development_data/DEVELOPMENT_DATA_OTHER.txt of the checkHNMR repository). It stays in the survey; the results
+of V2.1.5 on it are development results, not a measure of accuracy. Any other use of V2.1.5 in the survey will be
+registered in an update before it, with the articles used to develop V2.1.5 excluded or reported separately.
 
 5. Corrections to earlier updates
-
-The same errors in the repository texts (docs/DEVELOPMENT_LOG.md, VERSION, README.md) were corrected after the release, in commit 3c29a23 on the main branch. That commit changes text only; no file in list (a) changed.
-
-(a) Update 3, 3(b), says that the Organic Letters data were used in V2.1 for regression checks and for comparison. They were also used to calibrate the reading-quality marker of V2.1 on the 8,609 descriptions of the 201 SI files of the sample (24 October 2026), and changed findings among the 982 selected descriptions were judged against the survey reference (25–26 October 2026; docs/DEVELOPMENT_LOG.md, CHANGELOG.md).
-
-(b) Update 3, 3(c) and 3(d), say that Organic Letters articles of any year were never used as development data and that no article published in 2026 was used for development. Both statements are wrong for V2 and every later version, which inherit its code. As Update 2, 5(c), states, V2 was developed in part on the Supporting Information of two Organic Letters articles (ol3c04097, 2023; ol503595m, 2014) and three J. Am. Chem. Soc. 2026 articles (ja5c20554, ja6c04560, ja6c10875), and the upper bound of item 4(b) was tuned on the 982 selected descriptions of the survey. V2.1.5 adds ol5c05448 (section 4). All of these are development data, listed in docs/development_data/DEVELOPMENT_DATA_OTHER.txt; the accuracy of a version is measured only on data that are not development data (Update 1, 2(c)).
-
-(c) Update 9 refers to a case "listed as not checked in Update 3". Update 3 contains no list of cases that are not checked. The only such list in the updates is in Update 7 (items 2, 5 and 7), and it does not include item 6(a).
-
-(d) The version that gives the results of the survey. Update 4 (2(c)) and Updates 6, 7 and 9 (and, until commit 3c29a23, VERSION and README.md of checkHNMR) call it "frozen 17.10.2026, v1.1" or "frozen 17.10c / v1.1". As Update 1 (2(a)–(b)) states, the results of the survey are those of the frozen version of 18 October 2026, whose hashes are given in the amendment of 18 October 2026: the measuring scripts of 17 October 2026 (version 17c; count_1H_descriptions of 17d) with run_all.py of 18 October; hence the two dates. Version 1.1 is a code cleanup made after the freeze: on all 201 SI files of the sample its output tables are identical to those of the frozen version (EQUIVALENCE_v1.1_2026-10-18.txt), but it is not the frozen version. In Updates 1–4, "the paper" is the paper of this survey; in Update 9, it is the article on checkHNMR V2.1.3-beta.
+The same errors in the texts of the checkHNMR repository (docs/DEVELOPMENT_LOG.md, VERSION, README.md) were
+corrected after the release, in commit 3c29a23 on its main branch (text only; no file of the SHA-256 list changed).
+(a) Update 3, section 3(b), says that, as for V2, the 201 SI files of the Organic Letters sample were used for
+regression checks and the 982 reference descriptions for comparison. In V2.1 these data were also used to calibrate
+the reading-quality marker, on the 8,609 descriptions of the 201 SI files (24 October 2026), and changed findings
+among the 982 reference descriptions were judged against the reference (25-26 October 2026; DEVELOPMENT_LOG.md and
+CHANGELOG.md of the checkHNMR repository).
+(b) Update 3, sections 3(c) and 3(d), say that the journals of the survey, Org. Lett. included (any year), are
+never used as development data, and that no article published in 2026 was used for development. Both statements
+are wrong for V2 and every later version, which inherit its code: as Update 2, section 5(c), states, V2 was
+developed in part on the supporting information of two Org. Lett. articles (2023 and 2014) and three J. Am. Chem.
+Soc. 2026 articles, and its item-4(b) check was tuned on the 982 reference descriptions with their structures.
+These data and ol5c05448 (section 4) are listed in docs/development_data/DEVELOPMENT_DATA_OTHER.txt of the checkHNMR
+repository; as Update 1, section 2(c), requires, none of them is used to measure accuracy.
+(c) Update 9, section 2, says that the subcategory "flexible chain" of item 6(a) was "listed as not checked in
+Update 3 and in the paper on checkHNMR". Update 3 has no list of what is not checked and does not mention this
+subcategory; the reference to Update 3 is wrong.
+(d) Update 4 (section 3(c): "The frozen version used in the paper (version 1.1, SHA256_v1.1_2026-10-18.txt)") and
+Updates 6, 7 and 9 (section 1: "frozen 17.10.2026, v1.1"; last section: "the frozen version v1.1") identify the
+frozen version with version 1.1. These are two versions (Update 1, section 2). The results of the survey are those
+of the frozen version of 18 October 2026, whose SHA-256 values are in OSF_amendment_fullset_2026-10-18.txt: the
+measuring scripts of 17 October 2026 (version 17c, with count_1H_descriptions of 17d) and run_all.py of 18 October,
+hence the two dates. Version 1.1 (Update 1, section 2(b)) is a later reorganization of the code whose output files
+on all 201 SI files are identical to those of the frozen version (EQUIVALENCE_v1.1_2026-10-18.txt); it is not the
+version that gives the results.
